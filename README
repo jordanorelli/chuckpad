@@ -2,4 +2,8 @@ ChucKPad is a project that aims to explore the abilities of the Novation
 Launchpad using the ChucK programming language.  If you are unfamiliar with
 the programming environment, head on over to the ChucK homepage:
 
+You can launch the ChucKPad suite by chucking the startup.ck file.
+startup.ck will include each of the required ChucK files and set the program
+in motion.
+
 http://chuck.cs.princeton.edu/
