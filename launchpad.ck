@@ -3,7 +3,7 @@ public class Launchpad
 {
 	MidiIn padIn;
 	MidiOut padOut;
-	0 => int selected;
+	-1 => int selected;
 	int midiChannel;
 	LPI rack[8];
 
@@ -74,8 +74,8 @@ public class Launchpad
 			0 => m.data3;
 			padOut.send(m);
 
-			<<< "Selected: ", selected >>>;
-			rack[selected].unFocus();
+			if(selected != -1)
+				rack[selected].unFocus();
 			value => selected;
 			rack[selected].focus();
 
