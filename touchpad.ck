@@ -38,13 +38,23 @@ public class TouchPad extends LPI
 	{
 		if(m.data1 != 144)
 			return;
+		else if (mToCol(m.data2) == 8) 
+		{
+		}
 		else
+		{
 			setNote(mToRow(m.data2), mToCol(m.data2), m.data3);
-		bounce(m);
+			bounce(m);
+		}
 	}
 
 	fun void setNote(int row, int column, int velocity)
 	{
+		if (row < 0 || row > 7 || column < 0 || column > 7)
+		{
+			<<< "ERROR: out of bounds in setNote with input row:", row, " column:", column >>>;
+			return;
+		}
 		if(out[row][column] == null)
 		{
 			SinOsc o;
