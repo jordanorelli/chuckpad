@@ -35,11 +35,13 @@ string instruments[launchpadChannels.size()][8];
 -
 ----------------------------------------------------------*/
 Math.pow(2, 1.0/semitonesPerOctave) => float toneStep;
+<<< "Defining launchpadCollection..." >>>;
 Launchpad launchpadCollection[launchpadChannels.size()];
 bpm => LPI.bpm;
 
 for(0 => int i; i < launchpadChannels.size(); i++)
 {
+	<<< "Setting up Launchpad", i, "on MIDI channel", launchpadChannels[i] >>>;
 	new Launchpad @=> launchpadCollection[i];
 	launchpadCollection[i].setChannel(launchpadChannels[i]);
 	for(0 => int j; j < instruments[i].size(); j++)

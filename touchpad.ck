@@ -3,9 +3,12 @@ public class TouchPad extends LPI
 {
 	float toneMap[8][8];
 	UGen @ out[8][8];
+	8 => int rowStep;
 	0 => int waveformSelected;
 
+	<<< "TouchPad preconstructor start." >>>;
 	calculateToneMap();
+	<<< "TouchPad preconstructor end." >>>;
 
 	fun void unFocus()
 	{
@@ -14,19 +17,6 @@ public class TouchPad extends LPI
 			for(0 => int j; j < out[0].size(); j++)
 				if(out[i][j] != null)
 					0 => out[i][j].gain;
-	}
-
-	fun void setSemitonesPerOctave(int value)
-	{
-		if(value < 1)
-		{
-			<<< "ERROR: out of bounds in setSemitonesPerOctave with input: ", value >>>;
-			return;
-		}
-
-		value => semitonesPerOctave;
-		Math.pow(2, 1.0/value) => toneStep;
-		calculateToneMap();
 	}
 
 	fun void setLowestFreq(int value)
@@ -39,7 +29,7 @@ public class TouchPad extends LPI
 	{
 		for(0 => int row; row < toneMap.size(); row++)
 			for(0 => int column; column < toneMap[0].size(); column++)
-				lowestFreq * Math.pow(toneStep, toneMap.size() * row + column)
+				lowestFreq * Math.pow(toneStep, rowStep * row + column)
 					=> toneMap[row][column];
 	}
 

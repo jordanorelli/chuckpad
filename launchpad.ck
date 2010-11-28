@@ -5,7 +5,7 @@ public class Launchpad
 	MidiOut padOut;
 	-1 => int selected;
 	int midiChannel;
-	LPI rack[8];
+	LPI @ rack[8];
 
 	fun void setChannel(int value)
 	{
@@ -18,7 +18,8 @@ public class Launchpad
 			me.exit();
 
 		for(0 => int i; i < rack.size(); i++)
-			padOut @=> rack[i].padOut;
+			if(rack[i] != null)
+				padOut @=> rack[i].padOut;
 	}
 
 	fun void listen()
@@ -47,14 +48,21 @@ public class Launchpad
 
 	fun void addInstrument(string instrumentId, int index)
 	{
-		LPI instrument;
+		<<< "Launchpad addInstrument\t", instrumentId, "\t", index >>>;
+		LPI @ instrument;
+
 		if(instrumentId == "touchpad")
 			new TouchPad @=> instrument;
 		else if(instrumentId == "tonematrix")
 			new ToneMatrix @=> instrument;
 		else
+		{
 			<<< "ERROR: Attempt to add unrecognized LPI ", instrumentId,
 			" to Launchpad ", me >>>;
+			new LPI @=> instrument;
+		}
+
+		<<< "Adding", instrument.getName(), instrument, "to Launchpad", me, "in slot", index >>>;
 
 		padOut @=> instrument.padOut;
 		if(selected == index)
@@ -65,9 +73,9 @@ public class Launchpad
 
 	fun void setSelected(int value)
 	{
-		if(value != selected)
+		if(value != selected && rack[value] != null)
 		{
-			<<< "SELECT", "Launchpad", midiChannel, "slot", value, rack[value].getName(),rack[value] >>>;
+			<<< "SELECT", "Launchpad", me, midiChannel, value, rack[value].getName(),rack[value] >>>;
 			MidiMsg m;
 			176 => m.data1;
 			104 + selected => m.data2;

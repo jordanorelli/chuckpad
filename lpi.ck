@@ -1,20 +1,24 @@
 <<< "Defining class LPI." >>>;
 public class LPI
 {
-	static int bpm;
+	-1 => static int bpm;
 	static dur whole;
 	static dur half;
 	static dur quarter;
 	static dur eighth;
 
-	12 => int semitonesPerOctave;
-	8 => int rowStep;
+	-1 => int semitonesPerOctave;
 	110.0 => float lowestFreq;
 	false => int inFocus;
+	float toneStep;
 	MidiOut padOut;
 
-	Math.pow(2, 1.0/semitonesPerOctave) => float toneStep;
-	setBpm(120);
+	<<< "LPI base preconstructor start." >>>;
+	if(bpm == -1)
+		setBpm(120);
+	if(semitonesPerOctave == -1)
+		setSemitonesPerOctave(12);
+	<<< "LPI base preconstructor end." >>>;
 
 	fun void receive(MidiMsg m)
 	{
@@ -28,7 +32,7 @@ public class LPI
 
 	fun void start()
 	{
-		<<< "LPI_Base", me, "start." >>>;
+		<<< getName(), me, "start." >>>;
 	}
 
 	fun void focus()
@@ -122,6 +126,17 @@ public class LPI
 			return -1;
 		}
 		return 16 * (7 - row) + col;
+	}
+
+	fun void setSemitonesPerOctave(int value)
+	{
+		if(value < 1)
+		{
+			<<< "ERROR: out of bounds in setSemitonesPerOctave with input: ", value >>>;
+			return;
+		}
+		Math.pow(2, 1.0/value) => toneStep;
+		value => semitonesPerOctave;
 	}
 }
 <<< "Done with LPI class definition." >>>;
