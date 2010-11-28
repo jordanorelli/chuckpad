@@ -7,6 +7,15 @@ public class TouchPad extends LPI
 
 	calculateToneMap();
 
+	fun void unFocus()
+	{
+		false => inFocus;
+		for(0 => int i; i < out.size(); i++)
+			for(0 => int j; j < out[0].size(); j++)
+				if(out[i][j] != null)
+					0 => out[i][j].gain;
+	}
+
 	fun void setSemitonesPerOctave(int value)
 	{
 		if(value < 1)
