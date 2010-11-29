@@ -7,3 +7,20 @@ http://chuck.cs.princeton.edu/
 You can launch the ChucKPad suite by chucking the startup.ck file.
 startup.ck will include each of the required ChucK files and set the program
 in motion.
+
+At this time (Nov 28 2010) the suite consists of two programs: TouchPad and
+ToneMatrix.  
+
+TouchPad is a polyphonic synthesizer that lets you play your Launchpad as a
+straight controller.  Right now it just controls an array of sine oscillators,
+and there aren't any runtime options like tuning or tembre.  Those will be
+added in time.  The lowest note is set to 110Hz (A2) and is located in the
+bottom left corner.  Moving to the right, each square is a semitone above the
+previous.  Moving vertically, each square is a minor sixth (eight semitones)
+higher than the one below it.  The ergonomics are impossible, but it's a start.
+
+ToneMatrix is based on the Flash app of the same name over Laboratory Andre
+Michelle (http://lab.andre-michelle.com/tonematrix).  I added a visual cursor
+just to make things a little more apparent.  There's no way to change the
+waveform or row step at runtime (it's set to tritones at the moment), but I
+have that in mind for a future update.
