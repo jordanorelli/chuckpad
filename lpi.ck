@@ -22,7 +22,7 @@ public class LPI
 
 	fun void receive(MidiMsg m)
 	{
-		<<< "LPI base hears MidiMsg:\t", m.data1, "\t", m.data2, "\t", m.data3, "\tRow:", mToRow(m.data2), "\tCol:", mToCol(m.data2) >>>;
+		<<< getName(), "hears MidiMsg:\t", m.data1, "\t", m.data2, "\t", m.data3, "\tRow:", mToRow(m.data2), "\tCol:", mToCol(m.data2) >>>;
 	}
 
 	fun string getName()
