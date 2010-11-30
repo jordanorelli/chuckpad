@@ -1,11 +1,11 @@
 <<< "Defining ToneMatrix class." >>>;
 public class ToneMatrix extends LPI
 {
-	eighth => dur stepDuration;
+	eighth @=> dur stepDuration;
 	0 => int currentColumn;
 	float toneMap[8];
 	int notesQueued[8][8];
-	4 => int rowStep;
+	8 => int rowStep;
 
 	42 => int cursorColor;
 	87 => int noteOnColor;
@@ -54,7 +54,7 @@ public class ToneMatrix extends LPI
 		while(true)
 		{
 			step();
-			stepDuration => now;
+			eighth => now;
 		}
 	}
 

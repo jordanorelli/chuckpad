@@ -81,11 +81,17 @@ public class LPI
 
 	fun static void setBpm(int value)
 	{
+		if(value < 1)
+		{
+			<<< "ERROR: Attempt to lower tempo below 1 bpm.  Input: ", value >>>;
+			return;
+		}
+		<<< "BPM", value >>>;
 		value => bpm;
-		4::minute / bpm => whole;
-		whole / 2 => half;
-		half / 2 => quarter;
-		quarter / 2 => eighth;
+		4::minute / bpm @=> whole;
+		whole / 2 @=> half;
+		half / 2 @=> quarter;
+		quarter / 2 @=> eighth;
 	}
 
 	fun static int numToM(int keyNum)
