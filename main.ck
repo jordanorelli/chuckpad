@@ -27,7 +27,7 @@ string instruments[launchpadChannels.size()][8];
 // 0 to reference the Launchpad on channel 1, 1 to reference
 // the Launchpad on channel 3, and 2 to reference the Launchpad
 // on channel 9.
-["touchpad", "tonematrix"] @=> instruments[0];
+["touchpad", "tonematrix", "", "", "", "", "", "optionmaster"] @=> instruments[0];
 
 /*----------------------------------------------------------
 -

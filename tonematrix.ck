@@ -5,7 +5,7 @@ public class ToneMatrix extends LPI
 	0 => int currentColumn;
 	float toneMap[8];
 	int notesQueued[8][8];
-	6 => int rowStep;
+	4 => int rowStep;
 
 	42 => int cursorColor;
 	87 => int noteOnColor;

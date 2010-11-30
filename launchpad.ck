@@ -51,10 +51,14 @@ public class Launchpad
 		<<< "Launchpad addInstrument\t", instrumentId, "\t", index >>>;
 		LPI @ instrument;
 
-		if(instrumentId == "touchpad")
+		if(instrumentId == "")
+			return;
+		else if(instrumentId == "touchpad")
 			new TouchPad @=> instrument;
 		else if(instrumentId == "tonematrix")
 			new ToneMatrix @=> instrument;
+		else if(instrumentId == "optionmaster")
+			new OptionMaster @=> instrument;
 		else
 		{
 			<<< "ERROR: Attempt to add unrecognized LPI ", instrumentId,
