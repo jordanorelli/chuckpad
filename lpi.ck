@@ -6,6 +6,11 @@ public class LPI
 	static dur half;
 	static dur quarter;
 	static dur eighth;
+	static dur sixteenth;
+	static dur thirtySecond;
+	static dur sixtyFourth;
+	8 => static int numRows;
+	8 => static int numCols;
 
 	-1 => int semitonesPerOctave;
 	110.0 => float lowestFreq;
@@ -60,11 +65,15 @@ public class LPI
 
 	fun void setSquare(int row, int column, int velocity)
 	{
-		MidiMsg m;
-		144 => m.data1;
-		pairToM(row, column) => m.data2;
-		velocity => m.data3;
-		padOut.send(m);
+		if(midiState[row][column] != velocity)
+		{
+			velocity => midiState[row][column];
+			MidiMsg m;
+			144 => m.data1;
+			pairToM(row, column) => m.data2;
+			velocity => m.data3;
+			padOut.send(m);
+		}
 	}
 
 	fun void setColumn(int column, int velocity)
@@ -92,6 +101,7 @@ public class LPI
 		whole / 2 @=> half;
 		half / 2 @=> quarter;
 		quarter / 2 @=> eighth;
+		eighth / 2 @=> sixteenth;
 	}
 
 	fun static int numToM(int keyNum)

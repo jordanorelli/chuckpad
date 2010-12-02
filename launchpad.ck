@@ -59,6 +59,8 @@ public class Launchpad
 			new ToneMatrix @=> instrument;
 		else if(instrumentId == "optionmaster")
 			new OptionMaster @=> instrument;
+		else if(instrumentId == "sculptor")
+			new Sculptor @=> instrument;
 		else
 		{
 			<<< "ERROR: Attempt to add unrecognized LPI ", instrumentId,
