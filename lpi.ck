@@ -25,6 +25,7 @@ public class LPI
 		setSemitonesPerOctave(12);
 	<<< "LPI base preconstructor end." >>>;
 
+
 	fun void receive(MidiMsg m)
 	{
 		<<< getName(), "hears MidiMsg:\t", m.data1, "\t", m.data2, "\t", m.data3, "\tRow:", mToRow(m.data2), "\tCol:", mToCol(m.data2) >>>;
@@ -65,15 +66,15 @@ public class LPI
 
 	fun void setSquare(int row, int column, int velocity)
 	{
-		if(midiState[row][column] != velocity)
-		{
-			velocity => midiState[row][column];
-			MidiMsg m;
-			144 => m.data1;
-			pairToM(row, column) => m.data2;
-			velocity => m.data3;
-			padOut.send(m);
-		}
+		//velocity => midiState[row][column];
+		MidiMsg m;
+		144 => m.data1;
+		pairToM(row, column) => m.data2;
+		velocity => m.data3;
+		padOut.send(m);
+		//if(midiState[row][column] != velocity)
+		//{
+		//}
 	}
 
 	fun void setColumn(int column, int velocity)

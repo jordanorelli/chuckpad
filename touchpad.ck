@@ -1,11 +1,11 @@
 <<< "Defining TouchPad class." >>>;
 public class TouchPad extends LPI
 {
-	32 => int loopFrames;
+	8 => int loopFrames;
 	int sculpture[loopFrames][8][8];
 	0 => int currentFrame;
 	int cellsDown[numRows][numCols];
-	sixteenth @=> dur frameLength;
+	eighth @=> dur frameLength;
 	8 => int rowStep;
 	float toneMap[8][8];
 	UGen @ out[8][8];
@@ -22,19 +22,23 @@ public class TouchPad extends LPI
 				for(0 => int k; k < numCols; k++)
 					0 => sculpture[i][j][k];
 
+		for(0 => int i; i < 8; i++)
+			for(0 => int j; j < 8; j++)
+				if(j % 2 == 0)
+					127 => sculpture[0][i][j];
+
 		<<< "TouchPad start!" >>>;
-		while(true)
+		while(false)
 		{
-			step();
+			spork ~ step();
 			frameLength => now;
 		}
-
 	}
 
 	fun void step()
 	{
-		if(inFocus)
-			clearGrid();
+		//if(inFocus)
+			//clearGrid();
 
 		for(0 => int i; i < sculpture[0].size(); i++)
 		{
@@ -42,8 +46,8 @@ public class TouchPad extends LPI
 			{
 				//if(sculpture[currentFrame][i][j] || notesDown[i][j])
 				setNote(i, j, sculpture[currentFrame][i][j]);
-				if(inFocus)
-					setSquare(i, j, sculpture[currentFrame][i][j]);
+				//if(inFocus)
+					//setSquare(i, j, sculpture[currentFrame][i][j]);
 			}
 		}
 
@@ -99,6 +103,7 @@ public class TouchPad extends LPI
 
 	fun void setNote(int row, int column, int velocity)
 	{
+		<<< "SetNote", row, column, velocity >>>;
 		if (row < 0 || row > 7 || column < 0 || column > 7)
 		{
 			<<< "ERROR: out of bounds in setNote with input row:", row, " column:", column >>>;
@@ -106,10 +111,15 @@ public class TouchPad extends LPI
 		}
 		if(out[row][column] == null)
 		{
+			<<< "Note Played!" >>>;
 			SinOsc o;
 			toneMap[row][column] => o.freq;
 			o => dac;
 			o @=> out[row][column];
+		}
+		else
+		{
+			<<< "Note not played because of existing reference: ", out[row][column] >>>;
 		}
 		velocity / 127.0 => out[row][column].gain;
 	}

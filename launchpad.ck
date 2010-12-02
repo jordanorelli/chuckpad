@@ -5,6 +5,8 @@ public class Launchpad
 	MidiOut padOut;
 	-1 => int selected;
 	int midiChannel;
+	int midiState[8][8];
+	Launchpad @ registry[6];
 	LPI @ rack[8];
 
 	fun void setChannel(int value)
