@@ -1,6 +1,10 @@
 <<< "Defining class Launchpad." >>>;
 public class Launchpad
 {
+	0.15::second => dur peekTime;
+	int prevSelected;
+	int peekingIndex;
+	time peekStart;
 	MidiIn padIn;
 	MidiOut padOut;
 	-1 => int selected;
@@ -40,7 +44,22 @@ public class Launchpad
 				}
 				else if (msg.data3 == 127)
 				{
+					// control row button press
+					selected => prevSelected;
+					now => peekStart;
+					104 - msg.data2 => peekingIndex;
 					setSelected(Math.abs(104 - msg.data2));
+				}
+				else if (msg.data3 == 0)
+				{
+					if(now - peekStart > peekTime)
+						setSelected(prevSelected);
+					// this is an implied control row button release.
+					// risks of a false positive here.
+				}
+				else
+				{
+					<<< "ERROR: dropped Launchpad Midi message:", me, msg.data1, msg.data2, msg.data3 >>>;
 				}
 			}
 		}
