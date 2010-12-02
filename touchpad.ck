@@ -33,7 +33,7 @@ public class TouchPad extends LPI
 					=> toneMap[row][column];
 	}
 
-	fun void receive(MidiMsg m)
+	fun void gridReceive(MidiMsg m)
 	{
 		if(m.data1 != 144)
 			return;

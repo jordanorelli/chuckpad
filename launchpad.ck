@@ -3,7 +3,6 @@ public class Launchpad
 {
 	0.15::second => dur peekTime;
 	int prevSelected;
-	int peekingIndex;
 	time peekStart;
 	MidiIn padIn;
 	MidiOut padOut;
@@ -47,7 +46,6 @@ public class Launchpad
 					// control row button press
 					selected => prevSelected;
 					now => peekStart;
-					104 - msg.data2 => peekingIndex;
 					setSelected(Math.abs(104 - msg.data2));
 				}
 				else if (msg.data3 == 0)
@@ -58,9 +56,7 @@ public class Launchpad
 					// risks of a false positive here.
 				}
 				else
-				{
 					<<< "ERROR: dropped Launchpad Midi message:", me, msg.data1, msg.data2, msg.data3 >>>;
-				}
 			}
 		}
 	}
@@ -96,7 +92,7 @@ public class Launchpad
 
 	fun void setSelected(int value)
 	{
-		if(value != selected && rack[value] != null)
+		if(rack[value] != null)
 		{
 			<<< "SELECT", "Launchpad", me, midiChannel, value, rack[value].getName(),rack[value] >>>;
 			MidiMsg m;
@@ -108,12 +104,15 @@ public class Launchpad
 			if(selected != -1)
 				rack[selected].unFocus();
 			value => selected;
+
 			rack[selected].focus();
 
 			104 + selected => m.data2;
 			127 => m.data3;
 			padOut.send(m);
 		}
+		else
+			<<< "ERROR:  tried to select null LPI in setSelected.  Input:", value >>>;
 	}
 
 	fun void clearSelection()

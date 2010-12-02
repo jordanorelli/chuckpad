@@ -1,6 +1,11 @@
 <<< "Defining class LPI." >>>;
 public class LPI
 {
+	0.15::second => dur peekTime;
+	int prevSelected;
+	-1 => int selected;
+	int peekingIndex;
+	time peekStart;
 	-1 => static int bpm;
 	static dur whole;
 	static dur half;
@@ -12,6 +17,10 @@ public class LPI
 	false => int inFocus;
 	float toneStep;
 	MidiOut padOut;
+	OptionPage @ options[8];
+
+	for(0 => int i; i < options.size(); i++)
+		new OptionPage @=> options[i];
 
 	<<< "LPI base preconstructor start." >>>;
 	if(bpm == -1)
@@ -22,7 +31,39 @@ public class LPI
 
 	fun void receive(MidiMsg m)
 	{
-		<<< getName(), "hears MidiMsg:\t", m.data1, "\t", m.data2, "\t", m.data3, "\tRow:", mToRow(m.data2), "\tCol:", mToCol(m.data2) >>>;
+		if(m.data1 != 144)
+		{
+			<<< "ERROR:  LPI received a Midi message it shouldn't have:", m.data1, m.data2, m.data3 >>>;
+			return;
+		}
+		else if (mToCol(m.data2) == 8)
+		{
+			if(m.data3 == 127)
+			{
+				selected => prevSelected;
+				now => peekStart;
+				setSelected(mToRow(m.data2));
+			}
+			else if(m.data3 == 0)
+			{
+				if(now - peekStart > peekTime)
+					setSelected(prevSelected);
+			}
+			else
+				<<< "ERROR: dropex LPI Midi message:", me, m.data1, m.data2, m.data3 >>>;
+		}
+		else if(selected != -1 && !inFocus)
+			options[selected].receive(m);
+		else
+		{
+			<<< getName(), "hears MidiMsg:\t", m.data1, "\t", m.data2, "\t", m.data3, "\tRow:", mToRow(m.data2), "\tCol:", mToCol(m.data2) >>>;
+			gridReceive(m);
+		}
+	}
+
+	fun void gridReceive(MidiMsg m)
+	{
+
 	}
 
 	fun string getName()
@@ -56,6 +97,34 @@ public class LPI
 			numToM(i) => m.data2;
 			padOut.send(m);
 		}
+	}
+
+	fun void setSelected(int value)
+	{
+		if(selected != -1)
+		{
+			setSquare(selected, 8, 0);
+			options[selected].unFocus();
+		}
+		if(value == selected || value == -1)
+		{
+			-1 => selected;
+			focus();
+			return;
+		}
+
+		if(inFocus)
+			unFocus();
+
+		if(value < -1 || value > options.size())
+		{
+			<<< "ERROR: out of bounds in setSelected with input", value >>>;
+			return;
+		}
+		setSquare(value, 8, 127);
+		selected => prevSelected;
+		value => selected;
+		options[value].focus();
 	}
 
 	fun void setSquare(int row, int column, int velocity)

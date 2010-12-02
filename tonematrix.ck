@@ -15,9 +15,8 @@ public class ToneMatrix extends LPI
 	calculateToneMap(lowestFreq, toneStep, rowStep, toneMap.size()) @=> toneMap;
 	<<< "ToneMatrix preconstructor end." >>>;
 
-	fun void receive(MidiMsg m)
+	fun void gridReceive(MidiMsg m)
 	{
-		// <<< "ToneMatrix hears MidiMsg:\t", m.data1, "\t", m.data2, "\t", m.data3 >>>;
 		if(m.data1 != 144)
 			return;
 		else if (mToCol(m.data2) == 8)
