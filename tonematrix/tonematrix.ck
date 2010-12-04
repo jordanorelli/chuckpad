@@ -12,6 +12,7 @@ public class ToneMatrix extends LPI
 	112 => int noteQueuedColor;
 
 	<<< "ToneMatrix preconstructor start." >>>;
+	"ToneMatrix" => name;
 	calculateToneMap(lowestFreq, toneStep, rowStep, toneMap.size()) @=> toneMap;
 	<<< "ToneMatrix preconstructor end." >>>;
 
@@ -31,11 +32,6 @@ public class ToneMatrix extends LPI
 		{
 			// these are button unpresses.  So far meaningless.
 		}
-	}
-
-	fun string getName()
-	{
-		return "ToneMatrix";
 	}
 
 	fun void focus()

@@ -1,6 +1,7 @@
 <<< "Defining class LPI." >>>;
 public class LPI
 {
+	string name;
 	0.15::second => dur peekTime;
 	int prevSelected;
 	-1 => int selected;
@@ -20,6 +21,7 @@ public class LPI
 	OptionPage @ options[8];
 
 	<<< "LPI base preconstructor start." >>>;
+	"LPI_Base" => name;
 	if(bpm == -1)
 		setBpm(120);
 	if(semitonesPerOctave == -1)
@@ -65,7 +67,7 @@ public class LPI
 
 	fun string getName()
 	{
-		return "LPI_Base";
+		return name;
 	}
 
 	fun void start()

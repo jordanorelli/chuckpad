@@ -7,6 +7,7 @@ public class TouchPad extends LPI
 	0 => int waveformSelected;
 
 	<<< "TouchPad preconstructor start." >>>;
+	"TouchPad" => name;
 	calculateToneMap();
 	<<< "TouchPad preconstructor end." >>>;
 
@@ -62,11 +63,6 @@ public class TouchPad extends LPI
 			o @=> out[row][column];
 		}
 		velocity / 127.0 => out[row][column].gain;
-	}
-
-	fun string getName()
-	{
-		return "TouchPad";
 	}
 
 	fun void bounce(MidiMsg m)
