@@ -5,12 +5,12 @@ public class OptionPage
 
 	fun void focus()
 	{
-		<<< "OptionPage", me, "focus!" >>>;
+		<<< getName(), me, "focus!" >>>;
 	}
 
 	fun void unFocus()
 	{
-		<<< "OptionPage", me, "unfocus :-(" >>>;
+		<<< getName(), me, "unfocus :-(" >>>;
 	}
 
 	fun string getName()
@@ -20,7 +20,7 @@ public class OptionPage
 
 	fun void receive(MidiMsg m)
 	{
-		<<< "OptionPage", me, " hears ", m.data1, m.data2, m.data3 >>>;
+		<<< getName(), me, " hears ", m.data1, m.data2, m.data3 >>>;
 	}
 }
 <<< "Finished OptionPage definition." >>>;

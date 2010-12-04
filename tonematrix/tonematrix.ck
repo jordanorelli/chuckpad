@@ -13,6 +13,8 @@ public class ToneMatrix extends LPI
 
 	<<< "ToneMatrix preconstructor start." >>>;
 	calculateToneMap(lowestFreq, toneStep, rowStep, toneMap.size()) @=> toneMap;
+	for(0 => int i; i < 4; i++)
+		new Phrase @=> options[i];
 	<<< "ToneMatrix preconstructor end." >>>;
 
 	fun void gridReceive(MidiMsg m)

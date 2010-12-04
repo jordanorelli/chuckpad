@@ -3,9 +3,11 @@ public class Phrase extends OptionPage
 {
 	int velocities[8][8];
 
-	for(0 => int i; 0 < velocities.size(); i++)
-		for(0 => int j; 0 < velocities[0].size(); j++)
+	<<< "FOO" >>>;
+	for(0 => int i; i < velocities.size(); i++)
+		for(0 => int j; j < velocities[0].size(); j++)
 			0 => velocities[i][j];
+	<<< "BAR" >>>;
 	
 	fun string getName()
 	{
