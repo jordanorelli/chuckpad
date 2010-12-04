@@ -10,7 +10,7 @@ public class Utils
 	fun static int[] setArray(int target[], int value)
 	{
 		for(0 => int i; i < target.size(); i++)
-			value => target[i];
+			value @=> target[i];
 	}
 
 	fun static int[] setArray(int target[][], int value)

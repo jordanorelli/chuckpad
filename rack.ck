@@ -1,17 +1,17 @@
 <<< "Defining class Launchpad." >>>;
 public class Rack
 {
-	8 => static int gridRows;
-	8 => static int gridCols;
 	0.15::second => static dur peekTime;
-
-	int lastLPI;
 	time peekStart;
-	MidiIn padIn;
-	MidiOut padOut;
+
+	//8 => static int gridRows;
+	//8 => static int gridCols;
+
+	//int lastLPI;
+	//LaunchpadController @ device;
+	//MidiIn padIn;
+
 	int selected;
-	int midiChannel;
-	//Launchpad @ device;
 	LPI @ rack[8];
 
 	<<< "Launchpad Preconstructor Start." >>>;
@@ -20,17 +20,17 @@ public class Rack
 
 	fun void setChannel(int value)
 	{
-		<<< "Setting Launchpad midi channel to ", value >>>;
-		value => midiChannel;
-
-		if(!padIn.open(midiChannel))
-			me.exit();
-		if(!padOut.open(midiChannel))
+		if(!padIn.open(value))
 			me.exit();
 
+		new LaunchpadController @=> device;
+		device.setChannel(value);
+
+		/*
 		for(0 => int i; i < rack.size(); i++)
 			if(rack[i] != null)
 				padOut @=> rack[i].padOut;
+				*/
 	}
 
 	fun void listen()

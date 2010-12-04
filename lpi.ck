@@ -1,4 +1,4 @@
-<<< "Defining class LPI." >>>;
+<<< "BEGIN: LPI definition." >>>;
 public class LPI
 {
 	string name;
@@ -18,13 +18,12 @@ public class LPI
 	float toneStep;
 	MidiOut padOut;
 
-	<<< "LPI base preconstructor start." >>>;
-	"LPI_Base" => name;
+	<<< "BEGIN: " + getName() + " preconstructor." >>>;
 	if(bpm == -1)
 		setBpm(120);
 	if(semitonesPerOctave == -1)
 		setSemitonesPerOctave(12);
-	<<< "LPI base preconstructor end." >>>;
+	<<< "END: " + getName() + " preconstructor." >>>;
 
 	fun void receive(MidiMsg m)
 	{
@@ -51,6 +50,8 @@ public class LPI
 
 	fun string getName()
 	{
+		if(name == null)
+			"LPI_Base" => name;
 		return name;
 	}
 
@@ -92,6 +93,7 @@ public class LPI
 		}
 	}
 
+	/*
 	fun void setSquare(int row, int column, int velocity)
 	{
 		MidiMsg m;
@@ -100,6 +102,7 @@ public class LPI
 		velocity => m.data3;
 		padOut.send(m);
 	}
+	*/
 
 	fun void setColumn(int column, int velocity)
 	{
@@ -128,6 +131,7 @@ public class LPI
 		quarter / 2 @=> eighth;
 	}
 
+	/*
 	fun static int numToM(int keyNum)
 	{
 		if(keyNum < 0 || keyNum > 63)
@@ -137,36 +141,7 @@ public class LPI
 		}
 		return 16 * (7 - (keyNum / 8)) + keyNum % 8;
 	}
-
-	fun static int mToRow(int midiNum)
-	{
-		if(midiNum < 0 || midiNum > 120)
-		{
-			<<< "ERROR: out of bounds in mToRow.  Input:", midiNum >>>;
-			return -1;
-		}
-		return 7 - (midiNum / 16);
-	}
-
-	fun static int mToCol(int midiNum)
-	{
-		if(midiNum < 0 || midiNum > 120)
-		{
-			<<< "ERROR: out of bounds in mToCol.  Input:", midiNum >>>;
-			return -1;
-		}
-		return midiNum % 16;
-	}
-
-	fun static int pairToM(int row, int col)
-	{
-		if(row < 0 || row > 7 || col < 0 || col > 8)
-		{
-			<<< "ERROR: out of bounds in pairToM.  Input: row:", row, "col:", col >>>;
-			return -1;
-		}
-		return 16 * (7 - row) + col;
-	}
+	*/
 
 	fun void setSemitonesPerOctave(int value)
 	{
@@ -179,4 +154,4 @@ public class LPI
 		value => semitonesPerOctave;
 	}
 }
-<<< "Done with LPI class definition." >>>;
+<<< "END: LPI definition." >>>;
