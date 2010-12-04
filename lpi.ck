@@ -108,11 +108,18 @@ public class LPI
 
 	fun void setSelected(int value)
 	{
+		// in retrospect, using -1 to indicate that there's no option page
+		// selected was a fucking terrible idea.
+
+		if(value >= 0 && value < options.size() && options[value] == null)
+			return;
+
 		if(selected != -1)
 		{
 			setSquare(selected, 8, 0);
 			options[selected].unFocus();
 		}
+
 		if(value == selected || value == -1)
 		{
 			-1 => selected;
@@ -120,14 +127,15 @@ public class LPI
 			return;
 		}
 
-		if(inFocus)
-			unFocus();
-
 		if(value < -1 || value > options.size())
 		{
 			<<< "ERROR: out of bounds in setSelected with input", value >>>;
 			return;
 		}
+
+		if(inFocus)
+			unFocus();
+
 		setSquare(value, 8, 127);
 		selected => prevSelected;
 		value => selected;
