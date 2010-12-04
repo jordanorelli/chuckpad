@@ -141,6 +141,7 @@ public class LPI
 		selected => prevSelected;
 		value => selected;
 		options[value].focus();
+		clearGrid();
 	}
 
 	fun void setSquare(int row, int column, int velocity)
