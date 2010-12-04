@@ -4,7 +4,7 @@ public class LPI
 	string name;
 	0.15::second => dur peekTime;
 	int prevSelected;
-	-1 => int selected;
+	0 => int selected;
 	time peekStart;
 	-1 => static int bpm;
 	static dur whole;
