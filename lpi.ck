@@ -1,10 +1,10 @@
 <<< "Defining class LPI." >>>;
 public class LPI
 {
+	string name;
 	0.15::second => dur peekTime;
 	int prevSelected;
 	-1 => int selected;
-	int peekingIndex;
 	time peekStart;
 	-1 => static int bpm;
 	static dur whole;
@@ -20,6 +20,7 @@ public class LPI
 	OptionPage @ options[8];
 
 	<<< "LPI base preconstructor start." >>>;
+	"LPI_Base" => name;
 	if(bpm == -1)
 		setBpm(120);
 	if(semitonesPerOctave == -1)
@@ -65,7 +66,7 @@ public class LPI
 
 	fun string getName()
 	{
-		return "LPI_Base";
+		return name;
 	}
 
 	fun void start()
@@ -140,6 +141,7 @@ public class LPI
 		selected => prevSelected;
 		value => selected;
 		options[value].focus();
+		clearGrid();
 	}
 
 	fun void setSquare(int row, int column, int velocity)
