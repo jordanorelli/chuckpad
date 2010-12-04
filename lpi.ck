@@ -19,9 +19,6 @@ public class LPI
 	MidiOut padOut;
 	OptionPage @ options[8];
 
-	for(0 => int i; i < options.size(); i++)
-		new OptionPage @=> options[i];
-
 	<<< "LPI base preconstructor start." >>>;
 	if(bpm == -1)
 		setBpm(120);
@@ -80,11 +77,21 @@ public class LPI
 	{
 		true => inFocus;
 		clearGrid();
+		setOptionLight();
 	}
 
 	fun void unFocus()
 	{
 		false => inFocus;
+	}
+
+	fun void setOptionLight()
+	{
+		for(0 => int i; i < 8; i++)
+			if(selected == i)
+				setSquare(i, 8, 127);
+			else
+				setSquare(i, 8, 0);
 	}
 
 	fun void clearGrid()
