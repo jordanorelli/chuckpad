@@ -4,5 +4,5 @@ Machine.add("lpi.ck");
 Machine.add("optionmaster.ck");
 Machine.add("touchpad/touchpad.ck");
 Machine.add("tonematrix/tonematrix.ck");
-Machine.add("launchpad.ck");
+Machine.add("rack.ck");
 Machine.add("main.ck");

@@ -1,14 +1,22 @@
 <<< "Defining class Launchpad." >>>;
-public class Launchpad
+public class Rack
 {
-	0.15::second => dur peekTime;
-	int prevSelected;
+	8 => static int gridRows;
+	8 => static int gridCols;
+	0.15::second => static dur peekTime;
+
+	int lastLPI;
 	time peekStart;
 	MidiIn padIn;
 	MidiOut padOut;
-	-1 => int selected;
+	int selected;
 	int midiChannel;
+	//Launchpad @ device;
 	LPI @ rack[8];
+
+	<<< "Launchpad Preconstructor Start." >>>;
+	setSelected(0);
+	<<< "Launchpad Preconstructor End." >>>;
 
 	fun void setChannel(int value)
 	{
@@ -27,8 +35,6 @@ public class Launchpad
 
 	fun void listen()
 	{
-		clearSelection();
-		setSelected(0);
 		rack[0].clearGrid();
 		<<< "Launchpad ", me, " listening..." >>>;
 		MidiMsg msg;
@@ -44,14 +50,14 @@ public class Launchpad
 				else if (msg.data3 == 127)
 				{
 					// control row button press
-					selected => prevSelected;
+					selected => lastLPI;
 					now => peekStart;
 					setSelected(Math.abs(104 - msg.data2));
 				}
 				else if (msg.data3 == 0)
 				{
 					if(now - peekStart > peekTime)
-						setSelected(prevSelected);
+						setSelected(lastLPI);
 					// this is an implied control row button release.
 					// risks of a false positive here.
 				}
