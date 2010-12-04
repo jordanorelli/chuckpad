@@ -15,6 +15,7 @@ public class ToneMatrix extends LPI
 	calculateToneMap(lowestFreq, toneStep, rowStep, toneMap.size()) @=> toneMap;
 	for(4 => int i; i < 8; i++)
 		new Phrase @=> options[i];
+	setSelected(7);
 	<<< "ToneMatrix preconstructor end." >>>;
 
 	fun void gridReceive(MidiMsg m)
@@ -23,11 +24,13 @@ public class ToneMatrix extends LPI
 			return;
 		else if (mToCol(m.data2) == 8)
 		{
+			<<< "TONEMATRIX DOES WHAT NOW" >>>;
 			// TODO: add ToneMatrix option triggers here
 		}
 		else if (m.data3 ==127)
 		{
-			toggleNoteQueue(mToRow(m.data2), mToCol(m.data2), notesQueued);
+			if(selected != -1)
+				toggleNoteQueue(mToRow(m.data2), mToCol(m.data2), notesQueued);
 		}
 		else
 		{
