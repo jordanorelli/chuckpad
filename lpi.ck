@@ -3,8 +3,9 @@ public class LPI
 {
 	string name;
 	0.15::second => dur peekTime;
-	int prevSelected;
-	-1 => int selected;
+	0 => int prevSelected;
+	0 => int selected;
+	false => int optionMode;
 	time peekStart;
 	-1 => static int bpm;
 	static dur whole;
@@ -17,7 +18,9 @@ public class LPI
 	false => int inFocus;
 	float toneStep;
 	MidiOut padOut;
+	OptionEvent optionEvent;
 	OptionPage @ options[8];
+	int optionListeners[8];
 
 	<<< "LPI base preconstructor start." >>>;
 	"LPI_Base" => name;
@@ -25,6 +28,8 @@ public class LPI
 		setBpm(120);
 	if(semitonesPerOctave == -1)
 		setSemitonesPerOctave(12);
+	for(0 => int i; i < 8; i++)
+		new OptionPage @=> options[i];
 	<<< "LPI base preconstructor end." >>>;
 
 	fun void receive(MidiMsg m)
@@ -38,14 +43,25 @@ public class LPI
 		{
 			if(m.data3 == 127)
 			{
-				selected => prevSelected;
 				now => peekStart;
 				setSelected(mToRow(m.data2));
 			}
 			else if(m.data3 == 0)
 			{
+				<<< "Button held for", now - peekStart >>>;
 				if(now - peekStart > peekTime)
-					setSelected(prevSelected);
+				{
+					<<< "UnPeek!" >>>;
+					if(optionMode)
+						setSelected(prevSelected);
+					else
+					{
+						options[selected].unfocus();
+						focus();
+					}
+				}
+				else
+					true => optionMode;
 			}
 			else
 				<<< "ERROR: dropex LPI Midi message:", me, m.data1, m.data2, m.data3 >>>;
@@ -64,6 +80,19 @@ public class LPI
 
 	}
 
+	fun void optionEventListener(OptionPage p, OptionEvent e)
+	{
+		<<< "I done sporked." >>>;
+		while(p.inFocus)
+		{
+			<<< "Derp" >>>;
+			1::second=>now;
+			//e => now;
+			//<<< e.Poop >>>;
+		}
+		<<< "It's over!" >>>;
+	}
+
 	fun string getName()
 	{
 		return name;
@@ -78,21 +107,13 @@ public class LPI
 	{
 		true => inFocus;
 		clearGrid();
-		setOptionLight();
+		if(optionMode)
+			setOptionLight(selected);
 	}
 
-	fun void unFocus()
+	fun void unfocus()
 	{
 		false => inFocus;
-	}
-
-	fun void setOptionLight()
-	{
-		for(0 => int i; i < 8; i++)
-			if(selected == i)
-				setSquare(i, 8, 127);
-			else
-				setSquare(i, 8, 0);
 	}
 
 	fun void clearGrid()
@@ -109,39 +130,54 @@ public class LPI
 
 	fun void setSelected(int value)
 	{
-		// in retrospect, using -1 to indicate that there's no option page
-		// selected was a fucking terrible idea.
-
-		if(value >= 0 && value < options.size() && options[value] == null)
-			return;
-
-		if(selected != -1)
-		{
-			setSquare(selected, 8, 0);
-			options[selected].unFocus();
-		}
-
-		if(value == selected || value == -1)
-		{
-			-1 => selected;
-			focus();
-			return;
-		}
-
-		if(value < -1 || value > options.size())
+		if(value < -1 || value > 7)
 		{
 			<<< "ERROR: out of bounds in setSelected with input", value >>>;
 			return;
 		}
 
-		if(inFocus)
-			unFocus();
+		if(options[value] == null)
+		{
+			<<< "ERROR: attempt to select null optionPage" >>>;
+			return;
+		}
 
-		setSquare(value, 8, 127);
 		selected => prevSelected;
-		value => selected;
-		options[value].focus();
-		clearGrid();
+		if(value != selected)
+		{
+			value => selected;
+			unfocus();
+			options[value].focus();
+			(spork ~ optionEventListener(options[value], optionEvent)).id()
+				=> optionListeners[value];
+			setOptionLight(value);
+		}
+		else
+		{
+			if(optionMode)
+			{
+				focus();
+				options[selected].unfocus();
+				Machine.remove(optionListeners[selected]);
+				clearOptionLights();
+				false => optionMode;
+			}
+		}
+	}
+
+	fun void setOptionLight(int optionIndex)
+	{
+		for(0 => int i; i < 8; i++)
+			if(optionIndex == i)
+				setSquare(i, 8, 127);
+			else
+				setSquare(i, 8, 0);
+	}
+
+	fun void clearOptionLights()
+	{
+		for(0 => int i; i < 8; i++)
+			setSquare(i, 8, 0);
 	}
 
 	fun void setSquare(int row, int column, int velocity)

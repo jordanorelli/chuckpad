@@ -11,7 +11,7 @@ public class TouchPad extends LPI
 	calculateToneMap();
 	<<< "TouchPad preconstructor end." >>>;
 
-	fun void unFocus()
+	fun void unfocus()
 	{
 		false => inFocus;
 		for(0 => int i; i < out.size(); i++)

@@ -1,3 +1,4 @@
+Machine.add("optionevent.ck");
 Machine.add("optionpage.ck");
 Machine.add("lpi.ck");
 Machine.add("optionmaster.ck");

@@ -38,7 +38,8 @@ public class ToneMatrix extends LPI
 	{
 		true => inFocus;
 		//clearGrid();
-		setOptionLight();
+		if(optionMode)
+			setOptionLight(selected);
 		for(0 => int i; i < 8; i++)
 			drawColumn(i);
 	}

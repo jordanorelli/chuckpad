@@ -102,7 +102,7 @@ public class Launchpad
 			padOut.send(m);
 
 			if(selected != -1)
-				rack[selected].unFocus();
+				rack[selected].unfocus();
 			value => selected;
 
 			rack[selected].focus();
