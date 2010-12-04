@@ -17,7 +17,6 @@ public class LPI
 	false => int inFocus;
 	float toneStep;
 	MidiOut padOut;
-	OptionPage @ options[8];
 
 	<<< "LPI base preconstructor start." >>>;
 	"LPI_Base" => name;
@@ -36,22 +35,8 @@ public class LPI
 		}
 		else if (mToCol(m.data2) == 8)
 		{
-			if(m.data3 == 127)
-			{
-				selected => prevSelected;
-				now => peekStart;
-				setSelected(mToRow(m.data2));
-			}
-			else if(m.data3 == 0)
-			{
-				if(now - peekStart > peekTime)
-					setSelected(prevSelected);
-			}
-			else
-				<<< "ERROR: dropex LPI Midi message:", me, m.data1, m.data2, m.data3 >>>;
+			<<< "Do something here, like switch modes." >>>;
 		}
-		else if(selected != -1 && !inFocus)
-			options[selected].receive(m);
 		else
 		{
 			<<< getName(), "hears MidiMsg:\t", m.data1, "\t", m.data2, "\t", m.data3, "\tRow:", mToRow(m.data2), "\tCol:", mToCol(m.data2) >>>;
@@ -105,43 +90,6 @@ public class LPI
 			numToM(i) => m.data2;
 			padOut.send(m);
 		}
-	}
-
-	fun void setSelected(int value)
-	{
-		// in retrospect, using -1 to indicate that there's no option page
-		// selected was a fucking terrible idea.
-
-		if(value >= 0 && value < options.size() && options[value] == null)
-			return;
-
-		if(selected != -1)
-		{
-			setSquare(selected, 8, 0);
-			options[selected].unFocus();
-		}
-
-		if(value == selected || value == -1)
-		{
-			-1 => selected;
-			focus();
-			return;
-		}
-
-		if(value < -1 || value > options.size())
-		{
-			<<< "ERROR: out of bounds in setSelected with input", value >>>;
-			return;
-		}
-
-		if(inFocus)
-			unFocus();
-
-		setSquare(value, 8, 127);
-		selected => prevSelected;
-		value => selected;
-		options[value].focus();
-		clearGrid();
 	}
 
 	fun void setSquare(int row, int column, int velocity)
