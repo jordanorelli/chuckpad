@@ -33,26 +33,29 @@ public class ButtonPress extends Event
 	fun static ButtonPress fromM(MidiMsg m)
 	{
 		ButtonPress press;
-		if(m.data1 == 176)
-		{
-			m.data2 - 104 => press.col;
-			8 => press.row;
-		}
-		else
-		{
-			m.data2 % 16 => press.col;
-			if(press.col == 8)
-				m.data2 / 16 => press.row;
-			else
-				7 - (m.data2 / 16) => press.row;
-		}
+		colFromM(m) => press.col;
+		rowFromM(m) => press.row;
 		m.data3 => press.vel;
 		return press;
 	}
 
 	fun static int rowFromM(MidiMsg m)
 	{
+		if(m.data1 == 176)
+			return 8;
 
+		if(m.data2 % 16 == 8)
+			return m.data2 / 16;
+		else
+			return 7 - (m.data2 / 16);
+	}
+
+	fun static int colFromM(MidiMsg m)
+	{
+		if(m.data1 == 176)
+			return m.data2 - 104;
+		else
+			return m.data2 % 16;
 	}
 }
 <<< "Finished with ButtonPress definition." >>>;
