@@ -1,20 +1,20 @@
-<<< "Defining class ButtonPress." >>>;
-public class ButtonPress extends Event
+<<< "Defining class Press." >>>;
+public class Press extends Event
 {
     int col;
     int row;
     int vel;
 
-	fun static ButtonPress make(int col, int row, int vel)
+	fun static Press make(int col, int row, int vel)
 	{
-		ButtonPress press;
+		Press press;
 		col => press.col;
 		row => press.row;
 		vel => press.vel;
 		return press;
 	}
 
-	fun static MidiMsg toM(ButtonPress press)
+	fun static MidiMsg toM(Press press)
 	{
 		MidiMsg m;
 		if(press.row == 8)
@@ -30,9 +30,9 @@ public class ButtonPress extends Event
 		press.vel => m.data3;
 	}
 
-	fun static ButtonPress fromM(MidiMsg m)
+	fun static Press fromM(MidiMsg m)
 	{
-		ButtonPress press;
+		Press press;
 		colFromM(m) => press.col;
 		rowFromM(m) => press.row;
 		m.data3 => press.vel;
@@ -58,4 +58,4 @@ public class ButtonPress extends Event
 			return m.data2 % 16;
 	}
 }
-<<< "Finished with ButtonPress definition." >>>;
+<<< "Finished with Press definition." >>>;

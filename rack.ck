@@ -3,7 +3,7 @@ public class Rack
 {
 	LaunchpadController @ device;
 	MidiIn padIn;
-	ButtonPress buttonPress;
+	Press press;
 	
 	Instrument @ rack[8];
 
@@ -31,7 +31,7 @@ public class Rack
 		}
 		new LaunchpadController @=> device;
 		spork ~ midiHandler(padIn);
-		spork ~ device.listen(buttonPress);
+		spork ~ device.listen(press);
 		me.yield();
 		device.init(0);
 	}
@@ -45,13 +45,13 @@ public class Rack
 			midiIn => now;
 			while(midiIn.recv(m))
 			{
-				ButtonPress.fromM(m) @=> ButtonPress msgOut;
-				msgOut.col => buttonPress.col;
-				msgOut.row => buttonPress.row;
-				msgOut.vel => buttonPress.vel;
+				Press.fromM(m) @=> Press msgOut;
+				msgOut.col => press.col;
+				msgOut.row => press.row;
+				msgOut.vel => press.vel;
 				<<< "receive\track\t", me, "\t", m.data1, "\t", m.data2, "\t", m.data3 >>>;
-				<<< "signal\track\t", me, "\t", buttonPress.col, "\t", buttonPress.row, "\t", buttonPress.vel >>>;
-				buttonPress.signal();
+				<<< "signal\track\t", me, "\t", press.col, "\t", press.row, "\t", press.vel >>>;
+				press.signal();
 				me.yield();
 			}
 		}

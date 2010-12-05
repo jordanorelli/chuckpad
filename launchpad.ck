@@ -29,19 +29,19 @@ public class LaunchpadController
         <<< "END\tLaunchpadController init", midiChannel >>>;
     }
 
-    fun void listen(ButtonPress m)
+    fun void listen(Press press)
     {
         <<< "LaunchpadController listening..." >>>;
         while(true)
         {
-            m => now;
-            <<< "receive\tlpc\t", me, "\t", m.row, "\t", m.col, "\t", m.vel >>>;
-            if(m.row == 8)
-                setInstrumentLight(m.vel, m.col, instrumentLights, padOut);
-            else if(m.col == 8)
-                setModeLight(m.vel, m.row, modeLights, padOut);
+            press => now;
+            <<< "receive\tlpc\t", me, "\t", press.row, "\t", press.col, "\t", press.vel >>>;
+            if(press.row == 8)
+                setInstrumentLight(press.vel, press.col, instrumentLights, padOut);
+            else if(press.col == 8)
+                setModeLight(press.vel, press.row, modeLights, padOut);
             else
-                setGridLight(m.col, m.row, m.vel, gridLights, padOut);
+                setGridLight(press.col, press.row, press.vel, gridLights, padOut);
         }
     }
 
