@@ -2,7 +2,7 @@ Machine.add("utils/utils.ck");
 Machine.add("utils/console.ck");
 Machine.add("buttonpress.ck");
 Machine.add("instrument.ck");
-Machine.add("launchpad.ck");
+Machine.add("lpdriver.ck");
 Machine.add("rack.ck");
 Machine.add("othermain.ck");
 /*

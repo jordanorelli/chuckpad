@@ -1,5 +1,5 @@
-<<< "BEGIN\tLaunchpadController definition.", "" >>>;
-public class LaunchpadController
+<<< "BEGIN\tLPDriver definition.", "" >>>;
+public class LPDriver
 {
     MidiOut padOut;
     int gridLights[8][8];
@@ -19,7 +19,7 @@ public class LaunchpadController
 
     fun void listen(Press press)
     {
-        <<< "LaunchpadController listening..." >>>;
+        <<< "LPDriver listening..." >>>;
         while(true)
         {
             press => now;
@@ -47,4 +47,4 @@ public class LaunchpadController
 		<<< "send\tpad\t", padOut, "\t", m.data1, "\t", m.data2, "\t", m.data3, "\n" >>>;
 	}
 }
-<<< "END\tLaunchpadController definition.", "" >>>;
+<<< "END\tLPDriver definition.", "" >>>;

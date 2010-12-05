@@ -1,7 +1,7 @@
 <<< "Defining class Launchpad." >>>;
 public class Rack
 {
-	LaunchpadController @ device;
+	LPDriver @ device;
 	MidiIn padIn;
 	Press press;
 	
@@ -29,7 +29,7 @@ public class Rack
 			<<< "ERROR: couldn't open channel", midiChannel, "for MIDI in." >>>;
 			me.exit();
 		}
-		new LaunchpadController @=> device;
+		new LPDriver @=> device;
 		spork ~ midiHandler(padIn);
 		spork ~ device.listen(press);
 		me.yield();
@@ -62,7 +62,7 @@ public class Rack
 //		if(!padIn.open(value))
 //			me.exit();
 //
-//		new LaunchpadController @=> device;
+//		new LPDriver @=> device;
 //		device.setChannel(value);
 //
 //		/*
