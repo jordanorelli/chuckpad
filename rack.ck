@@ -1,12 +1,14 @@
 <<< "Defining class Launchpad." >>>;
 public class Rack
 {
-	0.15::second => static dur peekTime;
-	time peekStart;
 	LaunchpadController @ device;
 	MidiIn padIn;
-	SetLight lightMsg;
+	ButtonPress lightMsg;
+	
+	Instrument @ rack[8];
 
+	// 0.15::second => static dur peekTime;
+	// time peekStart;
 	//8 => static int gridRows;
 	//8 => static int gridCols;
 
@@ -43,10 +45,10 @@ public class Rack
 			midiIn => now;
 			while(midiIn.recv(m))
 			{
-				SetLight.fromM(m) @=> SetLight setLight;
-				setLight.col => lightMsg.col;
-				setLight.row => lightMsg.row;
-				setLight.vel => lightMsg.vel;
+				ButtonPress.fromM(m) @=> ButtonPress buttonPress;
+				buttonPress.col => lightMsg.col;
+				buttonPress.row => lightMsg.row;
+				buttonPress.vel => lightMsg.vel;
 				<<< "receive\track\t", me, "\t", m.data1, "\t", m.data2, "\t", m.data3 >>>;
 				<<< "signal\track\t", me, "\t", lightMsg.col, "\t", lightMsg.row, "\t", lightMsg.vel >>>;
 				lightMsg.signal();

@@ -1,22 +1,23 @@
 <<< "BEGIN: Instrument definition." >>>;
 public class Instrument 
 {
-    0.15::second => dur peekTime;
 
-    string name;
-    0 => int selected;
-    time peekStart;
-    int prevSelected;
-    -1 => static int bpm;
-    static dur whole;
-    static dur half;
-    static dur quarter;
-    static dur eighth;
-  
-    -1 => int semitonesPerOctave;
-    110.0 => float lowestFreq;
-    false => int inFocus;
-    float toneStep;
+//  0.15::second => dur peekTime;
+
+//  string name;
+//  0 => int selected;
+//  time peekStart;
+//  int prevSelected;
+//  -1 => static int bpm;
+//  static dur whole;
+//  static dur half;
+//  static dur quarter;
+//  static dur eighth;
+//
+//  -1 => int semitonesPerOctave;
+//  110.0 => float lowestFreq;
+//  false => int inFocus;
+//  float toneStep;
 //	MidiOut padOut;
 //
 //  <<< "BEGIN: " + getName() + " preconstructor." >>>;

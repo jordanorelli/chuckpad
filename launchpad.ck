@@ -29,7 +29,7 @@ public class LaunchpadController
         <<< "END\tLaunchpadController init", midiChannel >>>;
     }
 
-    fun void listen(SetLight m)
+    fun void listen(ButtonPress m)
     {
         <<< "LaunchpadController listening..." >>>;
         while(true)
