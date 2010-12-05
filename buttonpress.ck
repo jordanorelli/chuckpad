@@ -22,12 +22,20 @@ public class Press extends Event
 		else
 			144 => m.data1;
 
-		if(press.col == 8)
+		if(press.row == 8)
+			104 + press.col => m.data2;
+		else if(press.col == 8)
 			16 * press.row + press.col => m.data2;
 		else
-			16 * (7 - press.row) + press.col => m.data3;
+			16 * (7 - press.row) + press.col => m.data2;
 
 		press.vel => m.data3;
+		return m;
+	}
+
+	fun static MidiMsg toM(int col, int row, int vel)
+	{
+		return toM(make(col, row, vel));
 	}
 
 	fun static Press fromM(MidiMsg m)
