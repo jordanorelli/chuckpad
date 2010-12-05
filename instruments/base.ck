@@ -2,26 +2,53 @@
 public class Instrument 
 {
 	string name;
+	false => int inFocus;
 
 	Mode modes[8];
 	int selected;
 
-	"Instrument_Base" => name;
+	"base" => name;
 
 	fun string getName()
 	{
 		return name;
 	}
 
+	fun void focus()
+	{
+		<<< "focus\tinst\t", getName() >>>;
+		true => inFocus;
+	}
+
+	fun void unfocu()
+	{
+		false => inFocus;
+	}
+
 	fun void readPress(Press press)
 	{
 		reportReceive(press);
-		modes[selected].readPress(press);
+		if(press.col == 8)
+			if(press.vel == 127)
+				selectMode(press.row);
+			else
+				unselectMode(press.row);
+		else
+			modes[selected].readPress(press);
 	}
 
 	fun void reportReceive(Press press)
 	{
-		<<< "receive\tinst\t", me, "\t", press.col, "\t", press.row, "\t", press.vel >>>;
+		<<< "receive\tinst\t", getName(), "\t", press.col, "\t", press.row, "\t", press.vel >>>;
+	}
+
+	fun void selectMode(int index)
+	{
+		<<< "select\tmode\t", index, "\t", modes[index].getName() >>>;
+	}
+
+	fun void unselectMode(int index)
+	{
 	}
 
 

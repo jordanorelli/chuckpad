@@ -1,5 +1,12 @@
-<<< "Start Momentary GridMode definition." >>>;
-public class Momentary extends GridMode
+<<< "Start Momentary Mode definition." >>>;
+public class Momentary extends Mode
 {
+	"Momentary" => name;
+	fun void readPress(Press press)
+	{
+		reportReceive(press);
+		reportSignal(press);
+		press.signal();
+	}
 }
-<<< "End Momentary GridMode defintion." >>>;
+<<< "End Momentary Mode defintion." >>>;

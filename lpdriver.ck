@@ -2,47 +2,49 @@
 public class LPDriver
 {
     MidiOut padOut;
-    int gridLights[8][8];
-    int instrumentLights[8];
-    int modeLights[8];
+	int lightStatus[9][9];
 
     127 => static int maxVelocity;
 
     fun void init(int midiChannel)
     {
+		<<< "init\tdriver\t", padOut >>>;
         if(!padOut.open(midiChannel))
         {
             <<< "ERROR: couldn't open channel", midiChannel, "for MIDI out." >>>;
             me.exit();
         }
+		Utils.setArray(lightStatus, -1);
     }
 
     fun void listen(Press press)
     {
-        <<< "LPDriver listening..." >>>;
+        <<< "listen\tPress\tdriver\t", padOut >>>;
         while(true)
         {
             press => now;
             <<< "receive\tdriver\t", me, "\t", press.col, "\t", press.row, "\t", press.vel >>>;
-			send(press, padOut);
+			send(press);
         }
     }
 
-	fun void send(Press press, MidiOut padOut)
+	fun void send(Press press)
 	{
-		Press.toM(press) @=> MidiMsg m;
-		reportSend(m);
-		padOut.send(m);
+		if(lightStatus[press.col][press.row] != press.vel)
+		{
+			press.vel => lightStatus[press.col][press.row];
+			Press.toM(press) @=> MidiMsg m;
+			reportSend(m, padOut);
+			padOut.send(m);
+		}
 	}
 
-	fun void send(int col, int row, int vel, MidiOut padOut)
+	fun void send(int col, int row, int vel)
 	{
-		Press.toM(col, row, vel) @=> MidiMsg m;
-		reportSend(m);
-		padOut.send(m);
+		send(Press.make(col, row, vel));
 	}
 
-	fun void reportSend(MidiMsg m)
+	fun void reportSend(MidiMsg m, MidiOut padOut)
 	{
 		<<< "send\tpad\t", padOut, "\t", m.data1, "\t", m.data2, "\t", m.data3, "\n" >>>;
 	}

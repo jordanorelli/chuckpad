@@ -1,4 +1,4 @@
-<<< "Defining class Launchpad." >>>;
+<<< "Defining class Rack." >>>;
 public class Rack
 {
 	LPDriver @ device;
@@ -19,12 +19,13 @@ public class Rack
 	//int selected;
 	//LPI @ rack[8];
 
-	<<< "Launchpad Preconstructor Start." >>>;
+	<<< "Rack Preconstructor Start." >>>;
 	//setSelected(0);
-	<<< "Launchpad Preconstructor End." >>>;
+	<<< "Rack Preconstructor End." >>>;
 
 	fun void init(int midiChannel)
 	{
+		<<< "init\track\t", midiChannel >>>;
 		if(!padIn.open(midiChannel))
 		{
 			<<< "ERROR: couldn't open channel", midiChannel, "for MIDI in." >>>;
@@ -50,12 +51,38 @@ public class Rack
 				msgOut.col => press.col;
 				msgOut.row => press.row;
 				msgOut.vel => press.vel;
-				<<< "receive\track\t", me, "\t", m.data1, "\t", m.data2, "\t", m.data3 >>>;
+				<<< "receive\track\t", padIn, "\t", m.data1, "\t", m.data2, "\t", m.data3 >>>;
 
-				instruments[selected].readPress(press);
-				me.yield();
+				if(press.row == 8)
+				{
+					if(press.vel == 127)
+						selectInstrument(press.col);
+				}
+
+				else
+				{
+					instruments[selected].readPress(press);
+					me.yield();
+				}
 			}
 		}
+	}
+
+	fun void selectInstrument(int index)
+	{
+		<<< "select\tinst\t", index, "\t", instruments[index].getName() >>>;
+		instruments[index].focus();
+		for(0 => int i; i < 8; i++)
+			if(i == index)
+				device.send(i, 8, 127);
+			else
+				device.send(i, 8, 0);
+
+		index => selected;
+	}
+
+	fun void unselectInstrument(int index)
+	{
 	}
 
 //	fun void setChannel(int value)
@@ -76,7 +103,7 @@ public class Rack
 //	fun void listen()
 //	{
 //		rack[0].clearGrid();
-//		<<< "Launchpad ", me, " listening..." >>>;
+//		<<< "Rack ", me, " listening..." >>>;
 //		MidiMsg msg;
 //		while(true)
 //		{
@@ -102,14 +129,14 @@ public class Rack
 //					// risks of a false positive here.
 //				}
 //				else
-//					<<< "ERROR: dropped Launchpad Midi message:", me, msg.data1, msg.data2, msg.data3 >>>;
+//					<<< "ERROR: dropped Rack Midi message:", me, msg.data1, msg.data2, msg.data3 >>>;
 //			}
 //		}
 //	}
 //
 //	fun void addInstrument(string instrumentId, int index)
 //	{
-//		<<< "Launchpad addInstrument\t", instrumentId, "\t", index >>>;
+//		<<< "Rack addInstrument\t", instrumentId, "\t", index >>>;
 //		LPI @ instrument;
 //
 //		if(instrumentId == "")
@@ -123,11 +150,11 @@ public class Rack
 //		else
 //		{
 //			<<< "ERROR: Attempt to add unrecognized LPI ", instrumentId,
-//			" to Launchpad ", me >>>;
+//			" to Rack ", me >>>;
 //			new LPI @=> instrument;
 //		}
 //
-//		<<< "Adding", instrument.getName(), instrument, "to Launchpad", me, "in slot", index >>>;
+//		<<< "Adding", instrument.getName(), instrument, "to Rack", me, "in slot", index >>>;
 //
 //		padOut @=> instrument.padOut;
 //		if(selected == index)
@@ -140,7 +167,7 @@ public class Rack
 //	{
 //		if(rack[value] != null)
 //		{
-//			<<< "SELECT", "Launchpad", me, midiChannel, value, rack[value].getName(),rack[value] >>>;
+//			<<< "SELECT", "Rack", me, midiChannel, value, rack[value].getName(),rack[value] >>>;
 //			MidiMsg m;
 //			176 => m.data1;
 //			104 + selected => m.data2;
@@ -174,4 +201,4 @@ public class Rack
 //	}
 
 }
-<<< "Done with Launchpad class definition." >>>;
+<<< "Done with Rack class definition." >>>;
