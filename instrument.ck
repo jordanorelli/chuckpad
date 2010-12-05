@@ -1,6 +1,14 @@
 <<< "BEGIN: Instrument definition." >>>;
 public class Instrument 
 {
+	string name;
+
+	"Instrument_Base" => name;
+
+	fun string getName()
+	{
+		return name;
+	}
 
 //  0.15::second => dur peekTime;
 
