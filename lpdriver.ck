@@ -23,7 +23,7 @@ public class LPDriver
         while(true)
         {
             press => now;
-            <<< "receive\tlpc\t", me, "\t", press.row, "\t", press.col, "\t", press.vel >>>;
+            <<< "receive\tdriver\t", me, "\t", press.col, "\t", press.row, "\t", press.vel >>>;
 			send(press, padOut);
         }
     }

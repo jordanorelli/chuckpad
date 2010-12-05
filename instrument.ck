@@ -3,8 +3,8 @@ public class Instrument
 {
 	string name;
 
-	//Mode modes[8];
-	//int selected;
+	Mode modes[8];
+	int selected;
 
 	"Instrument_Base" => name;
 
@@ -16,8 +16,7 @@ public class Instrument
 	fun void readPress(Press press)
 	{
 		reportReceive(press);
-		reportSignal(press);
-		press.signal();
+		modes[selected].readPress(press);
 	}
 
 	fun void reportReceive(Press press)
@@ -25,10 +24,6 @@ public class Instrument
 		<<< "receive\tinst\t", me, "\t", press.col, "\t", press.row, "\t", press.vel >>>;
 	}
 
-	fun void reportSignal(Press press)
-	{
-		<<< "signal\tinst\t", me, "\t", press.col, "\t", press.row, "\t", press.vel >>>;
-	}
 
 //  0.15::second => dur peekTime;
 
