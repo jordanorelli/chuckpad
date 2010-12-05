@@ -1,4 +1,7 @@
-LaunchpadController device;
-device.init();
-device.setChannel(0);
-device.clearAll();
+Rack rack;
+rack.init(0);
+
+while(true)
+{
+	1::second => now;
+}
