@@ -48,7 +48,7 @@ public class Rack
 				setLight.row => lightMsg.row;
 				setLight.vel => lightMsg.vel;
 				<<< "receive\track\t", me, "\t", m.data1, "\t", m.data2, "\t", m.data3 >>>;
-				<<< "signal\track\t", me, "\t", lightMsg, "\t", lightMsg.col, "\t", lightMsg.row, "\t", lightMsg.vel >>>;
+				<<< "signal\track\t", me, "\t", lightMsg.col, "\t", lightMsg.row, "\t", lightMsg.vel >>>;
 				lightMsg.signal();
 				me.yield();
 			}
