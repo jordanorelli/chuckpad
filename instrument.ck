@@ -1,5 +1,5 @@
-<<< "BEGIN: LPI definition." >>>;
-public class LPI
+<<< "BEGIN: Instrument definition." >>>;
+public class Instrument 
 {
 	string name;
 	0.15::second => dur peekTime;
@@ -29,7 +29,7 @@ public class LPI
 	{
 		if(m.data1 != 144)
 		{
-			<<< "ERROR:  LPI received a Midi message it shouldn't have:", m.data1, m.data2, m.data3 >>>;
+			<<< "ERROR:  Instrument received a Midi message it shouldn't have:", m.data1, m.data2, m.data3 >>>;
 			return;
 		}
 		else if (mToCol(m.data2) == 8)
@@ -51,7 +51,7 @@ public class LPI
 	fun string getName()
 	{
 		if(name == null)
-			"LPI_Base" => name;
+			"Instrument_Base" => name;
 		return name;
 	}
 
@@ -154,4 +154,4 @@ public class LPI
 		value => semitonesPerOctave;
 	}
 }
-<<< "END: LPI definition." >>>;
+<<< "END: Instrument definition." >>>;
