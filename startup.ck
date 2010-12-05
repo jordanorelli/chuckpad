@@ -1,5 +1,8 @@
-Machine.add("utils.ck");
+Machine.add("utils/utils.ck");
+Machine.add("utils/console.ck");
+Machine.add("setlight.ck");
 Machine.add("launchpad.ck");
+Machine.add("rack.ck");
 Machine.add("othermain.ck");
 /*
 Machine.add("utils.ck");

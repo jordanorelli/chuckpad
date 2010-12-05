@@ -1,9 +1,6 @@
 public class Utils
 {
 
-	// these setArray functions are probably the shittiest thing I've ever
-	// felt the need to write.
-
 	/*--------------------------------------------------------------------------
 	setArray:  sets all elements of a given array to a particular value.
 	--------------------------------------------------------------------------*/
