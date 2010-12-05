@@ -1,6 +1,6 @@
 Machine.add("utils/utils.ck");
 Machine.add("utils/console.ck");
-Machine.add("buttonpress.ck");
+Machine.add("press.ck");
 Machine.add("instrument.ck");
 Machine.add("lpdriver.ck");
 Machine.add("rack.ck");
