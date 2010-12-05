@@ -5,7 +5,8 @@ public class Rack
 	MidiIn padIn;
 	Press press;
 	
-	Instrument @ rack[8];
+	Instrument instruments[8];
+	int selected;
 
 	// 0.15::second => static dur peekTime;
 	// time peekStart;
@@ -50,8 +51,8 @@ public class Rack
 				msgOut.row => press.row;
 				msgOut.vel => press.vel;
 				<<< "receive\track\t", me, "\t", m.data1, "\t", m.data2, "\t", m.data3 >>>;
-				<<< "signal\track\t", me, "\t", press.col, "\t", press.row, "\t", press.vel >>>;
-				press.signal();
+
+				instruments[selected].readPress(press);
 				me.yield();
 			}
 		}

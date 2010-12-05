@@ -3,11 +3,31 @@ public class Instrument
 {
 	string name;
 
+	//Mode modes[8];
+	//int selected;
+
 	"Instrument_Base" => name;
 
 	fun string getName()
 	{
 		return name;
+	}
+
+	fun void readPress(Press press)
+	{
+		reportReceive(press);
+		reportSignal(press);
+		press.signal();
+	}
+
+	fun void reportReceive(Press press)
+	{
+		<<< "receive\tinst\t", me, "\t", press.col, "\t", press.row, "\t", press.vel >>>;
+	}
+
+	fun void reportSignal(Press press)
+	{
+		<<< "signal\tinst\t", me, "\t", press.col, "\t", press.row, "\t", press.vel >>>;
 	}
 
 //  0.15::second => dur peekTime;
