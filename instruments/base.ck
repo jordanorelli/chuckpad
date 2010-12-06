@@ -20,7 +20,7 @@ public class Instrument
 		true => inFocus;
 	}
 
-	fun void unfocu()
+	fun void unfocus()
 	{
 		false => inFocus;
 	}

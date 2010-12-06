@@ -14,9 +14,20 @@ public class Press extends Event
 		return press;
 	}
 
-	fun static Press bounce(Press press, MidiOut padOut)
+//	fun static Press bounce(Press press, MidiOut padOut)
+//	{
+//		padOut.send(toM(press));
+//	}
+
+	fun static void fill(int col, int row, int vel, Press press)
 	{
-		padOut.send(toM(press));
+		col => press.col;
+		row => press.row;
+		vel => press.vel;
+	}
+	fun static Press signal(int col, int row, int vel)
+	{
+		make(col, row, vel).signal();
 	}
 
 	fun static MidiMsg toM(Press press)

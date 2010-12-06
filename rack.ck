@@ -7,6 +7,7 @@ public class Rack
 	
 	Instrument instruments[8];
 	int selected;
+	int prevSelected;
 
 	// 0.15::second => static dur peekTime;
 	// time peekStart;
@@ -71,12 +72,23 @@ public class Rack
 	fun void selectInstrument(int index)
 	{
 		<<< "select\tinst\t", index, "\t", instruments[index].getName() >>>;
+		instruments[prevSelected].unfocus();
 		instruments[index].focus();
 		for(0 => int i; i < 8; i++)
+		{
 			if(i == index)
-				device.send(i, 8, 127);
+			{
+				Press.fill(i, 8, 127, press);
+				press.signal();
+				me.yield();
+			}
 			else
-				device.send(i, 8, 0);
+			{
+				Press.fill(i, 8, 0, press);
+				press.signal();
+				me.yield();
+			}
+		}
 
 		index => selected;
 	}
