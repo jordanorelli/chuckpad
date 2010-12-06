@@ -5,7 +5,7 @@ public class Rack
 	MidiIn padIn;
 	Press press;
 	
-	Instrument instruments[8];
+	Instrument @ instruments[8];
 	int selected;
 	int prevSelected;
 
@@ -68,6 +68,17 @@ public class Rack
 			}
 		}
 	}
+
+	fun void addInstrument()
+	{
+		for(0 => int i; i < 8; i++)
+		{
+			new Instrument @=> instruments[i];
+			spork ~ device.listen(instruments[i].press);
+		}
+		me.yield();
+	}
+
 
 	fun void selectInstrument(int index)
 	{

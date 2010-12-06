@@ -3,9 +3,11 @@ public class Instrument
 {
 	string name;
 	false => int inFocus;
+	Press press;
 
 	Mode modes[8];
 	int selected;
+	int prevSelected;
 
 	"base" => name;
 
@@ -18,6 +20,7 @@ public class Instrument
 	{
 		<<< "focus\tinst\t", getName() >>>;
 		true => inFocus;
+		setModeLight();
 	}
 
 	fun void unfocus()
@@ -31,8 +34,6 @@ public class Instrument
 		if(press.col == 8)
 			if(press.vel == 127)
 				selectMode(press.row);
-			else
-				unselectMode(press.row);
 		else
 			modes[selected].readPress(press);
 	}
@@ -45,6 +46,29 @@ public class Instrument
 	fun void selectMode(int index)
 	{
 		<<< "select\tmode\t", index, "\t", modes[index].getName() >>>;
+		modes[prevSelected].unfocus();
+		modes[index].focus();
+		index => selected;
+		setModeLight();
+	}
+
+	fun void setModeLight()
+	{
+		for(0 => int i; i < 8; i++)
+		{
+			if(i == selected)
+			{
+				Press.fill(8, i, 127, press);
+				press.signal();
+				me.yield();
+			}
+			else
+			{
+				Press.fill(8, i, 0, press);
+				press.signal();
+				me.yield();
+			}
+		}
 	}
 
 	fun void unselectMode(int index)
