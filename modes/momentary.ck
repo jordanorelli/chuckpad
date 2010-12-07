@@ -2,11 +2,11 @@
 public class Momentary extends Mode
 {
 	"Momentary" => name;
-	fun void readPress(Press press)
+	fun void readPress(Press p)
 	{
-		reportReceive(press);
-		reportSignal(press);
-		press.signal();
+		reportReceive(p);
+		reportSignal(p);
+		p.signal();
 	}
 }
 <<< "End Momentary Mode defintion." >>>;

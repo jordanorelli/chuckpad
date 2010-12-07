@@ -1,11 +1,12 @@
 <<< "BEGIN: Instrument definition." >>>;
 public class Instrument 
 {
+	LPDriver @ device;
 	string name;
 	false => int inFocus;
 	Press press;
 
-	Mode modes[8];
+	Mode @ modes[8];
 	int selected;
 	int prevSelected;
 
@@ -21,6 +22,7 @@ public class Instrument
 		<<< "focus\tinst\t", getName() >>>;
 		true => inFocus;
 		setModeLight();
+		modes[selected].focus();
 	}
 
 	fun void unfocus()
@@ -32,8 +34,10 @@ public class Instrument
 	{
 		reportReceive(press);
 		if(press.col == 8)
+		{
 			if(press.vel == 127)
 				selectMode(press.row);
+		}
 		else
 			modes[selected].readPress(press);
 	}
@@ -41,6 +45,19 @@ public class Instrument
 	fun void reportReceive(Press press)
 	{
 		<<< "receive\tinst\t", getName(), "\t", press.col, "\t", press.row, "\t", press.vel >>>;
+	}
+
+	fun void addMode()
+	{
+		for(0 => int i; i < 8; i++)
+		{
+			if(i % 2 == 0)
+				new Toggle @=> modes[i];
+			else
+				new Momentary @=> modes[i];
+			spork ~ device.listen(modes[i].press);
+		}
+		me.yield();
 	}
 
 	fun void selectMode(int index)

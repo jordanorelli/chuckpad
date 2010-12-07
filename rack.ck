@@ -74,6 +74,8 @@ public class Rack
 		for(0 => int i; i < 8; i++)
 		{
 			new Instrument @=> instruments[i];
+			device @=> instruments[i].device;
+			instruments[i].addMode();
 			spork ~ device.listen(instruments[i].press);
 		}
 		me.yield();
