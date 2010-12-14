@@ -1,3 +1,4 @@
+Machine.add("utils/colors.ck");
 Machine.add("utils/utils.ck");
 Machine.add("utils/console.ck");
 Machine.add("press.ck");
