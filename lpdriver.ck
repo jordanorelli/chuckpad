@@ -1,4 +1,3 @@
-<<< "BEGIN\tLPDriver definition.", "" >>>;
 public class LPDriver
 {
     MidiOut padOut;
@@ -49,4 +48,3 @@ public class LPDriver
 		<<< "send\tpad\t", padOut, "\t", m.data1, "\t", m.data2, "\t", m.data3, "\n" >>>;
 	}
 }
-<<< "END\tLPDriver definition.", "" >>>;
