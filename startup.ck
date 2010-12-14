@@ -7,6 +7,7 @@ Machine.add("modes/base.ck");
 Machine.add("modes/momentary.ck");
 Machine.add("modes/toggle.ck");
 Machine.add("instruments/base.ck");
+Machine.add("instruments/touchpad/momentary.ck");
 Machine.add("instruments/touchpad/touchpad.ck");
 Machine.add("instruments/tonematrix/tonematrix.ck");
 Machine.add("rack.ck");

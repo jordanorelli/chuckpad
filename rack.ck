@@ -77,6 +77,8 @@ public class Rack
 			device @=> instruments[i].device;
 			instruments[i].addMode();
 			spork ~ device.listen(instruments[i].press);
+			if(i == 0)
+				break;
 		}
 		me.yield();
 	}

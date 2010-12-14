@@ -2,16 +2,9 @@
 public class TouchPad extends Instrument
 {
 	"TouchPad" => name;
-	float toneStep;
-	float toneMap[8][8];
-	8 => int rowStep;
-	UGen @ out[8][8];
-	0 => int waveformSelected;
-
-
 
 	// <<< "TouchPad preconstructor start." >>>;
-	calculateToneStep();
+	// calculateToneStep(12);
 	// <<< "TouchPad preconstructor end." >>>;
 
 	// fun void unFocus()
@@ -29,17 +22,53 @@ public class TouchPad extends Instrument
 	// 	calculateToneMap();
 	// }
 
-	fun void calculateToneStep()
+	fun void init()
 	{
+
 	}
 
-	fun void calculateToneMap()
+
+	fun void setMode(int index, string modeName)
 	{
-		for(0 => int row; row < toneMap.size(); row++)
-			for(0 => int column; column < toneMap[0].size(); column++)
-				lowestFreq * Math.pow(toneStep, rowStep * row + column)
-					=> toneMap[row][column];
+		if (modeName == "momentary")
+		{
+			<<< "IMPLEMENT:  add momentary mode to touchpad on index ", index >>>;
+		}
+		else
+		{
+			<<< "ERROR: The mode ", modeName, " was unrecognized." >>>;
+			me.exit();
+		}
+
 	}
+
+	fun void addMode()
+	{
+		[Colors.lightRed, Colors.red, Colors.lightOrange, Colors.orange,
+			Colors.lightYellow, Colors.yellow, Colors.lightGreen, Colors.green]
+			@=> int colors[];
+
+
+		/*
+		for(0 => int i; i < 8; i++)
+		{
+			MomentaryTouchPad mode;
+			mode.init();
+			colors[i] => mode.color;
+			mode @=> modes[i];
+			spork ~ device.listen(modes[i].press);
+		}
+		*/
+
+		MomentaryTouchPad mode;
+		mode.init();
+		Colors.red => mode.color;
+		mode @=> modes[0];
+		spork ~ device.listen(modes[0].press);
+
+		me.yield();
+	}
+
 
 	// fun void gridReceive(MidiMsg m)
 	// {
