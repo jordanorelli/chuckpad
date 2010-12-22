@@ -21,8 +21,8 @@ public class MomentaryTouchPad extends Momentary
 				toneMap[i][j] => s.freq;
 				//s => dac;
 				s @=> out[i][j];
-				out[i][j] => dac;
-				0 => s.gain;
+				//out[i][j] => dac;
+				0.4 => s.gain;
 			}
 		}
 	}
@@ -32,12 +32,16 @@ public class MomentaryTouchPad extends Momentary
 		reportReceive(p);
 		if(p.vel != 0)
 		{
-			0.6 => out[p.col][p.row].gain;
+			out[p.col][p.row] => dac;
+			//0.6 => out[p.col][p.row].gain;
 			<<< toneMap[p.col][p.row] >>>;
 			color => p.vel;
 		}
 		else
-			0 => out[p.col][p.row].gain;
+		{
+			out[p.col][p.row] =< dac;
+			//0 => out[p.col][p.row].gain;
+		}
 		reportSignal(p);
 		p.signal();
 	}
@@ -62,10 +66,14 @@ public class MomentaryTouchPad extends Momentary
 // 		clearGrid();
 // 	}
 // 
-// 	fun void unfocus()
-// 	{
-// 		false => inFocus;
-// 	}
+	fun void unfocus()
+	{
+		false => inFocus;
+		for(0 => int i; i < 8; i++)
+			for(0 => int j; j< 8; j++)
+				out[i][j] =< dac;
+		me.yield();
+	}
 // 
 // 	fun void reportReceive(Press press)
 // 	{

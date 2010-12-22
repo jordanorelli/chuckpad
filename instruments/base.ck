@@ -17,6 +17,11 @@ public class Instrument
 		return name;
 	}
 
+	fun void init()
+	{
+
+	}
+
 	fun void focus()
 	{
 		<<< "focus\tinst\t", getName() >>>;

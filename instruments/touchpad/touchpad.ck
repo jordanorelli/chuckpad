@@ -25,6 +25,20 @@ public class TouchPad extends Instrument
 	fun void init()
 	{
 
+		[Colors.lightRed, Colors.red, Colors.lightOrange, Colors.orange,
+			Colors.lightYellow, Colors.yellow, Colors.lightGreen, Colors.green]
+			@=> int colors[];
+
+		for(0 => int i; i < colors.size(); i++)
+		{
+			MomentaryTouchPad mode;
+			mode.init();
+			colors[i] => mode.color;
+			mode @=> modes[i];
+			spork ~ device.listen(modes[i].press);
+		}
+
+		me.yield();
 	}
 
 
@@ -44,9 +58,6 @@ public class TouchPad extends Instrument
 
 	fun void addMode()
 	{
-		[Colors.lightRed, Colors.red, Colors.lightOrange, Colors.orange,
-			Colors.lightYellow, Colors.yellow, Colors.lightGreen, Colors.green]
-			@=> int colors[];
 
 
 		/*
@@ -60,13 +71,6 @@ public class TouchPad extends Instrument
 		}
 		*/
 
-		MomentaryTouchPad mode;
-		mode.init();
-		Colors.red => mode.color;
-		mode @=> modes[0];
-		spork ~ device.listen(modes[0].press);
-
-		me.yield();
 	}
 
 

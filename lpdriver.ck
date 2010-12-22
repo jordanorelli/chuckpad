@@ -45,6 +45,6 @@ public class LPDriver
 
 	fun void reportSend(MidiMsg m, MidiOut padOut)
 	{
-		<<< "send\tpad\t", padOut, "\t", m.data1, "\t", m.data2, "\t", m.data3, "\n" >>>;
+		<<< "send\tpad\t", padOut, "\t", m.data1, "\t", m.data2, "\t", m.data3, "\n\n\n\n" >>>;
 	}
 }
