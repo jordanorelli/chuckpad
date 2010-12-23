@@ -80,7 +80,7 @@ public class Instrument
 		{
 			if(i == selected)
 			{
-				Press.fill(8, i, 127, press);
+				Press.fill(8, i, modes[i].color, press);
 				press.signal();
 				me.yield();
 			}

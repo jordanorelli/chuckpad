@@ -2,10 +2,13 @@
 public class Mode
 {
 	string name;
+	int color;
+
 	false => int inFocus;
 	Press press;
 
 	"base" => name;
+	Colors.red => color;
 
 	fun string getName()
 	{

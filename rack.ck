@@ -73,16 +73,20 @@ public class Rack
 	{
 		for(0 => int i; i < 8; i++)
 		{
+			/*
 			if (i == 0)
 				new TouchPad @=> instruments[i];
 			else if (i == 1)
 				new ToneMatrix @=> instruments[i];
+				*/
 
+			new TouchPad @=> instruments[i];
 			device @=> instruments[i].device;
 			instruments[i].init();
 			spork ~ device.listen(instruments[i].press);
-			if(i == 0)
+			/*if(i == 0)
 				break;
+				*/
 		}
 		me.yield();
 	}

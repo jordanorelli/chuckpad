@@ -2,7 +2,7 @@ public class MomentaryTouchPad extends Momentary
 {
 	float toneStep;
 	float toneMap[8][8];
-	8 => int rowStep;
+	4 => int rowStep;
 	110.0 => float lowestFreq;
 	//0 => int waveformSelected;
 	SinOsc @ out[8][8];
