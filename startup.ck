@@ -11,5 +11,6 @@ Machine.add("instruments/touchpad/momentary.ck");
 Machine.add("instruments/touchpad/touchpad.ck");
 Machine.add("instruments/chordpad/chordpad.ck");
 Machine.add("instruments/tonematrix/tonematrix.ck");
+Machine.add("instruments/wubwub/wubwub.ck");
 Machine.add("rack.ck");
 Machine.add("othermain.ck");
