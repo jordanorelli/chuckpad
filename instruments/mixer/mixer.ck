@@ -10,8 +10,5 @@ public class Mixer extends Instrument
 			spork ~ device.listen(modes[i].press);
 		}
 		me.yield();
-
 	}
-
-
 }

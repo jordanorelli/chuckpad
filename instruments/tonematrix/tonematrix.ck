@@ -1,20 +1,24 @@
 <<< "Defining ToneMatrix class." >>>;
 public class ToneMatrix extends Instrument
 {
-	"tonematrix";
-	// eighth @=> dur stepDuration;
-	// 0 => int currentColumn;
-	// float toneMap[8];
-	// int notesQueued[8][8];
-	// 8 => int rowStep;
-
 	// 42 => int cursorColor;
 	// 87 => int noteOnColor;
 	// 112 => int noteQueuedColor;
+	"ToneMatrix" => name;
 
+	fun void init()
+	{
+		//calculateToneMap(lowestFreq, toneStep, rowStep, toneMap.size()) @=> toneMap;
+		for(0 => int i; i < modes.size(); i++)
+		{
+			TMPhrase phrase;
+			110.0 => phrase.tempo;
+			phrase @=> modes[i];
+			phrase.init();
+			spork ~ device.listen(modes[i].press);
+		}
+	}
 	// <<< "ToneMatrix preconstructor start." >>>;
-	// "ToneMatrix" => name;
-	// calculateToneMap(lowestFreq, toneStep, rowStep, toneMap.size()) @=> toneMap;
 	// <<< "ToneMatrix preconstructor end." >>>;
 
 	// fun void gridReceive(MidiMsg m)
@@ -138,18 +142,5 @@ public class ToneMatrix extends Instrument
 	// 	0 => s.gain;
 	// }
 
-	// fun float[] calculateToneMap(float baseFrequency, float toneStep, int rowStep, int numSteps)
-	// {
-	// 	float tones[numSteps];
-	// 	baseFrequency => tones[0];
-	// 	if(numSteps < 2)
-	// 	{
-	// 		<<< "ERROR: numSteps out of bounds in calculateToneMap with input:", numSteps >>>;
-	// 		return tones;
-	// 	}
-	// 	for(1 => int i; i < numSteps; i++)
-	// 		tones[i-1] * Math.pow(toneStep, rowStep) => tones[i];
-	// 	return tones;
-	// }
 }
 <<< "Done with ToneMatrix class definition." >>>;
