@@ -69,6 +69,23 @@ public class Rack
 		}
 	}
 
+	fun void addInstrument(string instrumentName, int index)
+	{
+		Instrument inst;
+		if(instrumentName == "touchpad")
+			new TouchPad @=> inst;
+		else if (instrumentName == "tonematrix")
+			new ToneMatrix @=> inst;
+		else if (instrumentName == "wubwub")
+			new WubWub @=> inst;
+
+		device @=> inst.device;
+		inst.init();
+		inst @=> instruments[index];
+		spork ~ device.listen(instruments[index].press);
+		me.yield();
+	}
+
 	fun void addInstrument()
 	{
 		for(0 => int i; i < 8; i++)
@@ -113,6 +130,7 @@ public class Rack
 			}
 		}
 
+		<<< "poo" >>>;
 		index => selected;
 	}
 
