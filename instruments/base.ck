@@ -19,7 +19,11 @@ public class Instrument
 
 	fun void init()
 	{
-
+		for(0 => int i; i < modes.size(); i++)
+		{
+			new Momentary @=> modes[i];
+			spork ~ device.listen(modes[i].press);
+		}
 	}
 
 	fun void focus()
