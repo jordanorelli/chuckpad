@@ -10,7 +10,7 @@ public class MomentaryTouchPad extends Momentary
 
 	fun void init()
 	{
-		0.4::second => now;
+		//0.4::second => now;
 		calculateToneStep(12) => toneStep;
 		calculateToneMap();
 		for(0 => int i; i < 8; i++)
