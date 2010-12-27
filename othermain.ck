@@ -1,6 +1,6 @@
 Rack rack;
 rack.init(0);
-[ "touchpad", "tonematrix", "wubwub" ] @=> string instruments[];
+[ "touchpad", "tonematrix", "wubwub", "", "", "", "", "mixer" ] @=> string instruments[];
 for(0 => int i; i < instruments.size(); i++)
 {
 	rack.addInstrument(instruments[i], i);

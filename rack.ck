@@ -78,6 +78,10 @@ public class Rack
 			new ToneMatrix @=> inst;
 		else if (instrumentName == "wubwub")
 			new WubWub @=> inst;
+		else if (instrumentName == "mixer")
+			new Mixer @=> inst;
+		else
+			new TouchPad @=> inst;
 
 		device @=> inst.device;
 		inst.init();
