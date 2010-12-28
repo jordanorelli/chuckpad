@@ -116,7 +116,7 @@ public class Rack
 	fun void selectInstrument(int index)
 	{
 		<<< "select\tinst\t", index, "\t", instruments[index].getName() >>>;
-		instruments[prevSelected].unfocus();
+		instruments[selected].unfocus();
 		instruments[index].focus();
 		for(0 => int i; i < 8; i++)
 		{
@@ -135,6 +135,7 @@ public class Rack
 		}
 
 		<<< "poo" >>>;
+		//selected => prevSelected;
 		index => selected;
 	}
 

@@ -76,6 +76,7 @@ public class Instrument
 		<<< "select\tmode\t", index, "\t", modes[index].getName() >>>;
 		modes[prevSelected].unfocus();
 		modes[index].focus();
+		selected => prevSelected;
 		index => selected;
 		setModeLight();
 	}
@@ -99,9 +100,9 @@ public class Instrument
 		}
 	}
 
-	fun void unselectMode(int index)
-	{
-	}
+	//fun void unselectMode(int index)
+	//{
+	//}
 
 
 //  0.15::second => dur peekTime;
