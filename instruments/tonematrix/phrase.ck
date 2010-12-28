@@ -39,9 +39,15 @@ public class TMPhrase extends Mode
 
 	fun void focus()
 	{
+		<<< "-------------------------- FOCUS --------------------------", "" >>>;
 		for(0 => int i; i < numColumns; i++)
 			drawColumn(i);
 		true => inFocus;
+	}
+
+	fun void unfocus()
+	{
+		false => inFocus;
 	}
 
 	fun void drawColumn(int column)

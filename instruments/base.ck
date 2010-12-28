@@ -36,6 +36,8 @@ public class Instrument
 
 	fun void unfocus()
 	{
+		for(0 => int i; i < modes.size(); i++)
+			modes[i].unfocus();
 		false => inFocus;
 	}
 
