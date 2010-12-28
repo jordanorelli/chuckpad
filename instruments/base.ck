@@ -58,17 +58,19 @@ public class Instrument
 		<<< "receive\tinst\t", getName(), "\t", press.col, "\t", press.row, "\t", press.vel >>>;
 	}
 
-	fun void addMode()
+	fun void addMode(int index, string modeName, int color)
 	{
-		for(0 => int i; i < 8; i++)
-		{
-			if(i % 2 == 0)
-				new Toggle @=> modes[i];
-			else
-				new Momentary @=> modes[i];
-			spork ~ device.listen(modes[i].press);
-		}
+		modeFactory(modeName) @=> Mode mode;
+		mode.init();
+		color => mode.color;
+		mode @=> modes[index];
+		spork ~ device.listen(modes[index].press);
 		me.yield();
+	}
+
+	fun Mode modeFactory(string modeName)
+	{
+		return new Momentary;
 	}
 
 	fun void selectMode(int index)

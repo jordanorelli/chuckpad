@@ -21,6 +21,11 @@ public class Mode
 		<<< "", "" >>>;
 	}
 
+	fun void init()
+	{
+		<<< "init\tmode\t", getName() >>>;
+	}
+
 	fun void focus()
 	{
 		<<< "focus\tmode\t", getName() >>>;

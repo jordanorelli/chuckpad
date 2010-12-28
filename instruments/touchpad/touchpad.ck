@@ -24,40 +24,42 @@ public class TouchPad extends Instrument
 
 	fun void init()
 	{
-
 		[Colors.lightRed, Colors.red, Colors.lightOrange, Colors.orange,
 			Colors.lightYellow, Colors.yellow, Colors.lightGreen, Colors.green]
 			@=> int colors[];
-
-		for(0 => int i; i < colors.size(); i++)
+		for(0 => int i; i < 8; i++)
 		{
-			MomentaryTouchPad mode;
-			mode.init();
-			colors[i] => mode.color;
-			mode @=> modes[i];
-			spork ~ device.listen(modes[i].press);
+			addMode(i, "momentary", colors[i]);
 		}
+	}
+
+
+	fun void addMode(int index, string modeName, int color)
+	{
+		modeFactory(modeName) @=> Mode mode;
+		
+		mode.init();
+		color => mode.color;
+		mode @=> modes[index];
+		spork ~ device.listen(modes[index].press);
 
 		me.yield();
 	}
 
-
-	fun void setMode(int index, string modeName)
+	fun Mode modeFactory(string modeName)
 	{
 		if (modeName == "momentary")
 		{
-			<<< "IMPLEMENT:  add momentary mode to touchpad on index ", index >>>;
+			return new MomentaryTouchPad;
 		}
 		else
 		{
-			<<< "ERROR: The mode ", modeName, " was unrecognized." >>>;
-			me.exit();
+			return new MomentaryTouchPad;
 		}
-
 	}
 
-	fun void addMode()
-	{
+	//fun void addMode()
+	//{
 
 
 		/*
@@ -71,7 +73,7 @@ public class TouchPad extends Instrument
 		}
 		*/
 
-	}
+	//}
 
 
 	// fun void gridReceive(MidiMsg m)
